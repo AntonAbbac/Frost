@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs}:
 pkgs.writeShellScriptBin "workspace-selector" ''
   OPTIONS="1. Dev\n2. Notes (Obsidian)\n3. Complete (Zed + Obsidian + Librewolf)\n4. Clean"
   CHOICE=$(echo -e "$OPTIONS" | rofi -dmenu -p "Workflow for today:")

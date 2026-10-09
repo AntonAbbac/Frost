@@ -1,4 +1,4 @@
-{...}: {
+_: {
   wayland.windowManager.hyprland.settings = {
     bind = [
       "$mainMod, Q, exec, $terminal"

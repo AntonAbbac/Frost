@@ -11,7 +11,6 @@
     fd # find
     dust # du
     procs # ps
-
     git
     lsof
     unzip

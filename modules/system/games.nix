@@ -20,10 +20,9 @@
     ryubing
     prismlauncher
     retroarch
-
     steam-run
-    wineWow64Packages.staging
-    gamescope
+    prismlauncher
+    bottles
   ];
   programs = {
     gamemode.enable = true;

@@ -1,15 +1,9 @@
-{pkgs, ...}: {
+_: {
   services.greetd.enable = true;
 
-  programs.regreet = {
+  services.displayManager.regreet = {
     enable = true;
 
     cageArgs = ["-s"];
-
-    extraCss = ''
-      window {
-        border-radius: 12px;
-      }
-    '';
   };
 }

@@ -4,14 +4,17 @@
     unzip
     zip
     obsidian
+    nixd
     gh
     proton-pass
     proton-vpn
     protonmail-desktop
     proton-authenticator
-    rclone
     syncthing
+    alejandra
     librewolf
+    tor-browser
+    nodejs
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

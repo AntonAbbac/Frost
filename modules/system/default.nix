@@ -7,6 +7,7 @@
     ./network.nix
     ./bluetooth.nix
     ./thunar.nix
+    ./git.nix
     ./virtualisation.nix
     ./fonts.nix
     ./services.nix

@@ -25,6 +25,5 @@
     };
   };
 
-  # Garante suporte a variáveis D-Bus/PAM e Polkit
   security.polkit.enable = true;
 }
