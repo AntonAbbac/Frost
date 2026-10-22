@@ -1,5 +1,5 @@
 {
-  description = "Configuração NixOS — Hyprland + Home Manager";
+  description = "Frost";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -47,7 +47,6 @@
             home-manager.extraSpecialArgs = {inherit inputs;};
 
             home-manager.users.anton = import ./modules/anton.nix;
-            home-manager.users.miranha = import ./modules/miranha.nix;
           }
         ];
       };
