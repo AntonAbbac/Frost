@@ -14,15 +14,9 @@
     enable32Bit = true;
   };
   environment.systemPackages = with pkgs; [
-    lutris
-    heroic
     bottles
-    ryubing
-    prismlauncher
-    retroarch
     steam-run
     prismlauncher
-    bottles
   ];
   programs = {
     gamemode.enable = true;
