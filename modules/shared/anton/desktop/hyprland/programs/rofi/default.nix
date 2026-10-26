@@ -2,10 +2,26 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  rofi-obsidian = pkgs.writeShellScriptBin "rofi-obsidian" ''
+    VAULT_PATH="$HOME/Nexus/Projects/Frostwriter/Vault"
+    VAULT_NAME="Vault"
+
+    NOTE=$(${pkgs.findutils}/bin/find "$VAULT_PATH" -type f -name "*.md" | ${pkgs.gnused}/bin/sed "s|$VAULT_PATH/||" | ${pkgs.rofi}/bin/rofi -dmenu -i -p "Obsidian:")
+
+    if [ -n "$NOTE" ]; then
+        ${pkgs.xdg-utils}/bin/xdg-open "obsidian://open?vault=''${VAULT_NAME}&file=''${NOTE}"
+    fi
+  '';
+in {
+  home.packages = [rofi-obsidian];
+
   programs.rofi = {
     enable = true;
-    terminal = "${pkgs.kitty}/bin/kitty";
+
+    settings = {
+      terminal = "${pkgs.kitty}/bin/kitty";
+    };
 
     theme = let
       inherit (config.lib.formats.rasi) mkLiteral;

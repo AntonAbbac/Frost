@@ -14,7 +14,7 @@ _: {
       "$mainMod, L, exec, hyprlock"
       "$mainMod, X, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
       "$mainMod, Y, exec, ytfzf -m"
-
+      "$mainMod, O, exec, rofi-obsidian"
       "$mainMod SHIFT, W, exec, workspace-selector"
 
       "$mainMod, left, movefocus, l"
