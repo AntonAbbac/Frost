@@ -90,7 +90,7 @@ _: {
         {
           name = "zed-workspace";
           "match:class" = "^(dev.zed.Zed)$";
-          workspace = "2 silent";
+          workspace = "3 silent";
           float = "off";
           size = "800 600";
           center = "off";

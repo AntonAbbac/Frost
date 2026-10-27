@@ -1,18 +1,9 @@
-{pkgs, ...}: let
-  pkgs-electron30 =
-    import (fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/refs/tags/24.05.tar.gz";
-      sha256 = "1lr1h35prqkd1mkmzriwlpvxcb34kmhc9dnr48gkm8hh089hifmx";
-    }) {
-      system = pkgs.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-    };
-in {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     wget
     unzip
     zip
-    (obsidian.override {electron = pkgs-electron30.electron_30;})
+    obsidian # Usa a versão do Electron oficial do seu nixpkgs
     rofi-obsidian
     proton-pass
     proton-vpn
