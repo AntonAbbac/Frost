@@ -6,14 +6,14 @@ _: {
       systemd-boot.enable = false;
 
       efi = {
-        canTouchEfiVariables = false;
+        canTouchEfiVariables = true;
       };
 
       grub = {
         enable = true;
         efiSupport = true;
         device = "nodev";
-        efiInstallAsRemovable = true;
+	efiInstallAsRemovable = false;
       };
     };
   };
