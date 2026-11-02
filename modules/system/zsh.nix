@@ -3,19 +3,19 @@
   users.defaultUserShell = pkgs.zsh;
 
   environment.systemPackages = with pkgs; [
-    eza # ls
-    bat # cat
-    zoxide # cd com memória
-    fzf # busca fuzzy
-    ripgrep # grep
-    fd # find
-    dust # du
-    procs # ps
+    bat
+    dust
+    eza
+    fd
+    fzf
     git
-    lsof
-    unzip
-    p7zip
     gnutar
+    lsof
+    p7zip
+    procs
+    ripgrep
+    unzip
+    zoxide
   ];
 
   programs.zsh = {
@@ -39,13 +39,9 @@
       tree = "eza --tree --icons";
 
       cat = "bat --paging=never";
-
       grep = "rg";
-
       find = "fd";
-
       du = "dust";
-
       ps = "procs";
 
       g = "git";
@@ -77,12 +73,11 @@
       dexec = "docker exec -it";
       dprune = "docker system prune -f";
 
-      rebuild-test = "sudo nixos-rebuild test --flake /etc/dotfiles#nixos";
       hm-news = "home-manager news";
       nix-clean = "sudo nix-collect-garbage -d";
       nix-search = "nix search nixpkgs";
-      d-nix = "nix run nixpkgs#deadnix -- --edit /etc/dotfiles";
-      stix = "nix run nixpkgs#statix -- fix /etc/dotfiles";
+      d-nix = "nix run nixpkgs";
+      stix = "nix run nixpkgs";
       fmt-nix = "alejandra --write /etc/dotfiles";
 
       ni = "npm install";
@@ -106,27 +101,37 @@
       ports = "sudo ss -tulpn";
       weather = "curl -s wttr.in";
       ytm = "ytfzf -m";
+
+      envExtra = ''
+        export NH_FLAKE="/etc/dotfiles"
+      '';
     };
 
     interactiveShellInit = ''
       rebuild() {
         cd /etc/dotfiles && git add -A
-        sudo nixos-rebuild switch --flake /etc/dotfiles#''${1:-nixos}
+        nh os switch /etc/dotfiles
       }
+      rebuild-test() {
+        cd /etc/dotfiles && git add -A
+        nh os test /etc/dotfiles
+      }
+
       nixclean() {
         local dir="''${1:-/etc/dotfiles}"
 
         echo "🧹 Limpando código morto (deadnix)..."
-        nix run nixpkgs#deadnix -- --edit "$dir" || return 1
+        nix run nixpkgs#deadnix -- --edit "$dir"
 
         echo "🔧 Corrigindo antipadrões (statix)..."
-        nix run nixpkgs#statix -- fix "$dir" || return 1
+        nix run nixpkgs#statix -- fix "$dir"
 
         echo "🎨 Formatando (alejandra)..."
         alejandra "$dir" || return 1
 
         echo "✅ Pronto!"
       }
+
       setopt HIST_IGNORE_DUPS
       setopt HIST_IGNORE_ALL_DUPS
       setopt HIST_IGNORE_SPACE
@@ -192,9 +197,7 @@
     '';
   };
 
-  programs.zoxide = {
-    enable = true;
-  };
+  programs.zoxide.enable = true;
 
   programs.fzf = {
     keybindings = true;
