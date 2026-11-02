@@ -1,14 +1,23 @@
 {
-  description = "Frost";
+  description = "Frost NixOS System Flake";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.11";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-    stylix.url = "github:danth/stylix";
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     sysc-greet = {
       url = "github:Nomadcxx/sysc-greet";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,38 +30,91 @@
   };
 
   outputs = {
+    self,
     nixpkgs,
+    nixpkgs-stable,
+    nixos-hardware,
     home-manager,
     stylix,
     ...
   } @ inputs: let
-    mkHost = {hostname}:
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+
+    pkgs-stable = import nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+    };
+
+    mkHost = {
+      hostname,
+      system ? "x86_64-linux",
+      extraModules ? [],
+    }:
       nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
 
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs pkgs-stable;
+        };
 
-        modules = [
-          ./hosts/${hostname}/configuration.nix
-          inputs.sysc-greet.nixosModules.default
-          inputs.nix-flatpak.nixosModules.nix-flatpak
-          stylix.nixosModules.stylix
+        modules =
+          [
+            ./hosts/${hostname}/configuration.nix
+            inputs.sysc-greet.nixosModules.default
+            inputs.nix-flatpak.nixosModules.nix-flatpak
+            stylix.nixosModules.stylix
 
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.backupFileExtension = "backup";
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "backup";
+                extraSpecialArgs = {inherit inputs pkgs-stable;};
 
-            home-manager.extraSpecialArgs = {inherit inputs;};
+                users = {
+                  anton = import ./modules/anton.nix;
+                  miraven = import ./modules/miraven.nix;
+                };
+              };
+            }
 
-            home-manager.users.anton = import ./modules/anton.nix;
-          }
-        ];
+            {
+              programs.nh = {
+                enable = true;
+                clean = {
+                  enable = true;
+                  extraArgs = "--keep-since 4d --keep 3";
+                };
+                flake = "/etc/dotfiles";
+              };
+            }
+          ]
+          ++ extraModules;
       };
   in {
     nixosConfigurations = {
-      nixos = mkHost {hostname = "default";};
+      nixos = mkHost {
+        hostname = "default";
+        extraModules = [
+          nixos-hardware.nixosModules.common-cpu-amd
+          nixos-hardware.nixosModules.common-gpu-amd
+        ];
+      };
+    };
+
+    formatter.${system} = pkgs.alejandra;
+
+    devShells.${system}.default = pkgs.mkShell {
+      name = "dotfiles-dev-shell";
+      packages = with pkgs; [
+        alejandra
+        deadnix
+        git
+        nh
+        statix
+      ];
     };
   };
 }
