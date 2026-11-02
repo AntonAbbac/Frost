@@ -1,5 +1,13 @@
 _: {
-  hardware.bluetooth.powerOnBoot = true;
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Experimental = true;
+      };
+    };
+  };
+
   services.blueman.enable = true;
 }

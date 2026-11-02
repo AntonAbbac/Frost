@@ -1,3 +1,13 @@
 _: {
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [22];
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+      X11Forwarding = false;
+    };
+    openFirewall = true;
+  };
 }

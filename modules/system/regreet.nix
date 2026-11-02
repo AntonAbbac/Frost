@@ -1,9 +1,12 @@
 _: {
   services.greetd.enable = true;
 
-  services.displayManager.regreet = {
+  programs.regreet = {
     enable = true;
-
-    cageArgs = ["-s"];
+    cageArgs = [
+      "-s"
+      "-m"
+      "last"
+    ];
   };
 }

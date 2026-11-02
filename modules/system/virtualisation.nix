@@ -1,12 +1,21 @@
 {pkgs, ...}: {
-  virtualisation.docker = {
-    enable = true;
-    package = pkgs.docker_29;
-  };
-  virtualisation.podman.enable = true;
+  virtualisation = {
+    docker = {
+      enable = true;
+      autoPrune = {
+        enable = true;
+        dates = "weekly";
+      };
+    };
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
+    podman = {
+      enable = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
+
+  environment.systemPackages = with pkgs; [
+    docker-compose
+    podman-compose
   ];
 }

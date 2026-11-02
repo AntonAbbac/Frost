@@ -4,25 +4,40 @@
 
   console.keyMap = "br-abnt2";
 
-  nix.settings.trusted-users = ["root" "anton"];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    auto-optimise-store = true;
+    trusted-users = [
+      "root"
+      "anton"
+    ];
+  };
+
+  programs.hyprland.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+    ];
+    config = {
+      common = {
+        default = [
+          "hyprland"
+          "gtk"
+        ];
+      };
+    };
+  };
 
   environment.pathsToLink = [
     "/share/applications"
     "/share/xdg-desktop-portal"
   ];
-  programs.hyprland.enable = true;
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-    ];
-    config = {
-      common = {
-        default = ["hyprland" "gtk"];
-      };
-    };
-  };
 
   security.polkit.enable = true;
 }

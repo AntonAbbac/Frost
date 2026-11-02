@@ -1,19 +1,22 @@
 {pkgs, ...}: {
+  nixpkgs.config.allowUnfree = true;
+
   environment.systemPackages = with pkgs; [
-    wget
-    unzip
-    zip
-    obsidian # Usa a versão do Electron oficial do seu nixpkgs
-    rofi-obsidian
+    android-tools
+    librewolf
+    nodejs
+    obsidian
+    ollama
+    proton-authenticator
     proton-pass
     proton-vpn
     protonmail-desktop
-    proton-authenticator
+    qbittorrent-enhanced
+    rofi-obsidian
     syncthing
-    librewolf
     tor-browser
-    nodejs
+    unzip
+    wget
+    zip
   ];
-
-  nixpkgs.config.allowUnfree = true;
 }
