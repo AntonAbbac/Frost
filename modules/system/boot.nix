@@ -1,7 +1,7 @@
-_: {
+{pkgs, ...}: {
   boot = {
     plymouth.enable = true;
-
+    kernelPackages = pkgs.linuxPackages_zen;
     loader = {
       systemd-boot.enable = false;
 
@@ -13,7 +13,7 @@ _: {
         enable = true;
         efiSupport = true;
         device = "nodev";
-	efiInstallAsRemovable = false;
+        efiInstallAsRemovable = false;
       };
     };
   };

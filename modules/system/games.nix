@@ -19,10 +19,14 @@
     bottles
     steam-run
     r2modman
+    lutris
     prismlauncher
     pciutils
     hydralauncher
     protonup-qt
+    wine
+    protontricks
+    wineWowPackages.stable
   ];
 
   programs = {
