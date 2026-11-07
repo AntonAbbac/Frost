@@ -1,9 +1,13 @@
 _: {
+  boot.extraModprobeConfig = ''
+    options iwlwifi power_save=0
+    options iwlmvm power_scheme=1
+  '';
+  boot.kernelParams = ["pcie_aspm=off"];
   networking = {
-    hostName = "nixos";
     networkmanager = {
       enable = true;
-      wifi.powersave = true;
+      wifi.powersave = false;
     };
     nftables.enable = true;
     firewall = {

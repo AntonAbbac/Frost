@@ -30,7 +30,6 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     nixpkgs-stable,
     nixos-hardware,
@@ -95,11 +94,18 @@
       };
   in {
     nixosConfigurations = {
-      nixos = mkHost {
-        hostname = "default";
+      desktop = mkHost {
+        hostname = "desktop";
         extraModules = [
           nixos-hardware.nixosModules.common-cpu-amd
           nixos-hardware.nixosModules.common-gpu-amd
+        ];
+      };
+
+      laptop = mkHost {
+        hostname = "laptop";
+        extraModules = [
+          nixos-hardware.nixosModules.common-pc-laptop
         ];
       };
     };

@@ -18,5 +18,8 @@
     unzip
     wget
     zip
+    p7zip
+    gsmartcontrol
+    smartmontools
   ];
 }

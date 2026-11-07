@@ -74,7 +74,7 @@
       dprune = "docker system prune -f";
 
       hm-news = "home-manager news";
-      nix-clean = "sudo nix-collect-garbage -d";
+
       nix-search = "nix search nixpkgs";
       d-nix = "nix run nixpkgs";
       stix = "nix run nixpkgs";
@@ -109,16 +109,25 @@
 
     interactiveShellInit = ''
       rebuild() {
-        cd /etc/dotfiles && git add -A
-        nh os switch /etc/dotfiles
+        local host="$(hostname)"
+
+        if [[ "$host" != "desktop" && "$host" != "laptop" ]]; then
+          return 1
+        fi
+        cd /etc/dotfiles && git add -A && nh os switch /etc/dotfiles --hostname "$host"
       }
+
+      alias os-switch="rebuild"
       rebuild-test() {
         cd /etc/dotfiles && git add -A
         nh os test /etc/dotfiles
       }
 
-      nixclean() {
+      nix-clean() {
         local dir="''${1:-/etc/dotfiles}"
+
+        echo "deleting the garbage (old cache)..."
+        sudo nix-collect-garbage -d
 
         echo "🧹 Limpando código morto (deadnix)..."
         nix run nixpkgs#deadnix -- --edit "$dir"
@@ -129,7 +138,7 @@
         echo "🎨 Formatando (alejandra)..."
         alejandra "$dir" || return 1
 
-        echo "✅ Pronto!"
+        echo "✅ Done!"
       }
 
       setopt HIST_IGNORE_DUPS

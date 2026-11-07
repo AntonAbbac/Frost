@@ -24,6 +24,12 @@
     options = ["fmask=0022" "dmask=0022"];
   };
 
+  fileSystems."/home/anton/SteamLibrary" = {
+    device = "/dev/disk/by-uuid/3e8932f8-3ce2-492a-b648-0337554ed9d0";
+    fsType = "ext4";
+    options = ["nosuid" "nodev" "nofail"];
+  };
+
   swapDevices = [];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";

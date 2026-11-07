@@ -4,6 +4,7 @@
     ./host-packages.nix
     ../../modules/system/default.nix
   ];
+  networking.hostName = "desktop";
   stylix = {
     enable = true;
     image = ../../modules/themes/wallpapers/shadow-dio.png;

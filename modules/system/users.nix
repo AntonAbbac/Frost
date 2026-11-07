@@ -11,6 +11,7 @@
         "networkmanager"
         "video"
         "wheel"
+        "storage"
       ];
       shell = pkgs.zsh;
       packages = with pkgs; [
