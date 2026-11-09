@@ -22,7 +22,7 @@
       base0F = "c8e8ff";
     };
     polarity = "dark";
-    image = ../../themes/wallpapers/firewatch.png;
+    image = ../../themes/wallpapers/lawliet.png;
     opacity = {
       terminal = 0.85;
       popups = 0.90;

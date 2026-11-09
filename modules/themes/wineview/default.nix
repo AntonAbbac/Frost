@@ -22,7 +22,7 @@
       base0F = "590d22";
     };
     polarity = "light";
-    image = ../../themes/wallpapers/shadow-dio.png;
+    image = ../../themes/wallpapers/lelouch.jpg;
     opacity = {
       terminal = 0.85;
       popups = 0.90;
