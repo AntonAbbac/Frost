@@ -3,6 +3,7 @@
     {_args = ["SUPER + Q" (lib.generators.mkLuaInline "hl.dsp.exec_cmd(terminal)")];}
     {_args = ["SUPER + C" (lib.generators.mkLuaInline "hl.dsp.window.close()")];}
     {_args = ["SUPER + M" (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wlogout\")")];}
+    {_args = ["SUPER + W" (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wallpaper-picker\")")];}
     {_args = ["SUPER + SHIFT + M" (lib.generators.mkLuaInline "hl.dsp.exit()")];}
     {_args = ["SUPER + E" (lib.generators.mkLuaInline "hl.dsp.exec_cmd(fileManager)")];}
     {_args = ["SUPER + V" (lib.generators.mkLuaInline "hl.dsp.window.float({ action = \"toggle\" })")];}

@@ -7,9 +7,22 @@
     settings = {
       fileManager = {_var = "thunar";};
       mainMod = {_var = "SUPER";};
-      menu = {_var = "rofi -show drun";};
+      menu = {_var = "rofi -show drun -theme ~/.config/rofi/launcher.rasi";};
       terminal = {_var = "kitty";};
       screenshotDir = {_var = lib.generators.mkLuaInline ''os.getenv("HOME") .. "/Pictures/Screenshots"'';};
+
+      monitor = [
+        {
+          _args = [
+            {
+              output = "DVI-D-1";
+              mode = "1920x1080@60";
+              position = "0x0";
+              scale = 1;
+            }
+          ];
+        }
+      ];
 
       config = {
         general = {
@@ -23,19 +36,17 @@
 
         decoration = {
           rounding = 12;
-          active_opacity = 1.0;
-          inactive_opacity = 0.95;
+          active_opacity = 0.92;
+          inactive_opacity = 0.85;
           blur = {
             enabled = true;
-            size = 6;
+            size = 8;
             passes = 3;
+            noise = 0.02;
+            vibrancy = 0.2;
             new_optimizations = true;
             ignore_opacity = true;
-          };
-          shadow = {
-            enabled = true;
-            range = 15;
-            render_power = 3;
+            popups = true;
           };
         };
 
@@ -79,8 +90,6 @@
           };
         };
 
-        monitor = [",preferred,auto,auto"];
-
         env = [
           "HYPRCURSOR_THEME,Bibata-Modern-Classic"
           "HYPRCURSOR_SIZE,20"
@@ -106,9 +115,12 @@
             "hyprland.start"
             (lib.generators.mkLuaInline ''
               function()
+                hl.exec_cmd("hyprpanel")
                 hl.exec_cmd("waybar")
                 hl.exec_cmd("swww-daemon")
                 hl.exec_cmd("swww img /etc/dotfiles/modules/themes/wallpapers/firewatch.png")
+                hl.exec_cmd("eww open-many dashboard player")
+                hl.exec_cmd("nwg-dock-hyprland -i 36 -mb 10 -x -ico $HOME/.config/nwg-dock-hyprland/launcher.svg -c '" .. menu .. "'")
                 hl.exec_cmd("wl-paste --type text --watch cliphist store")
                 hl.exec_cmd("wl-paste --type image --watch cliphist store")
                 hl.exec_cmd("nm-applet")
@@ -182,6 +194,19 @@
           match = {title = "^(Picture-in-Picture)$";};
           float = true;
           pin = true;
+        }
+      ];
+
+      layer_rule = [
+        {
+          match = {namespace = "^(waybar|rofi|notifications|nwg-dock.*|eww-.*)$";};
+          blur = true;
+          ignore_alpha = 0.3;
+        }
+        {
+          match = {namespace = "^(waybar|rofi|notifications|nwg-dock|eww-.*)$";};
+          blur = true;
+          ignore_alpha = 0.3;
         }
       ];
     };

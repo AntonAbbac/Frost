@@ -11,8 +11,8 @@
       global = {
         width = 300;
         height = "(30, 100)";
-        offset = "(10, 40)";
-        origin = "top-right";
+        offset = "(0, 56)";
+        origin = "top-center";
         transparency = 10;
         corner_radius = 10;
       };
