@@ -32,8 +32,10 @@
   };
 
   systemd.tmpfiles.rules = [
-    "d /mnt/storage/steamapps 0777 root root -"
-    "Z /mnt/storage/steamapps 0777 root root -"
+    "d /mnt/storage/steamapps 0775 anton users -"
+    "Z /mnt/storage/steamapps 0775 anton users -"
+    "d /mnt/storage/steamapps 0775 miraven users -"
+    "Z /mnt/storage/steamapps 0775 miraven users -"
   ];
 
   environment.sessionVariables = {
