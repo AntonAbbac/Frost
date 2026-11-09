@@ -118,7 +118,7 @@
                 hl.exec_cmd("hyprpanel")
                 hl.exec_cmd("waybar")
                 hl.exec_cmd("swww-daemon")
-                hl.exec_cmd("swww img /etc/dotfiles/modules/themes/wallpapers/firewatch.png")
+                hl.exec_cmd("swww img /etc/Frost/modules/themes/wallpapers/firewatch.png")
                 hl.exec_cmd("eww open-many dashboard player")
                 hl.exec_cmd("nwg-dock-hyprland -i 36 -mb 10 -x -ico $HOME/.config/nwg-dock-hyprland/launcher.svg -c '" .. menu .. "'")
                 hl.exec_cmd("wl-paste --type text --watch cliphist store")

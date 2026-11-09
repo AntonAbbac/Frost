@@ -86,7 +86,7 @@
                   enable = true;
                   extraArgs = "--keep-since 4d --keep 3";
                 };
-                flake = "/etc/dotfiles";
+                flake = "/etc/Frost";
               };
             }
           ]
@@ -113,7 +113,7 @@
     formatter.${system} = pkgs.alejandra;
 
     devShells.${system}.default = pkgs.mkShell {
-      name = "dotfiles-dev-shell";
+      name = "Frost-dev-shell";
       packages = with pkgs; [
         alejandra
         deadnix

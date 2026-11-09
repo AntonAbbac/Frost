@@ -6,7 +6,7 @@ pkgs.writeShellScriptBin "wallpaper-picker" ''
   FIND="${pkgs.findutils}/bin/find"
   BASENAME="${pkgs.coreutils}/bin/basename"
 
-  WALL_DIR="/etc/dotfiles/modules/themes/wallpapers"
+  WALL_DIR="/etc/Frost/modules/themes/wallpapers"
 
   if ! $AWWW query >/dev/null 2>&1; then
     $AWWW_DAEMON &

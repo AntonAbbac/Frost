@@ -78,7 +78,7 @@
       nix-search = "nix search nixpkgs";
       d-nix = "nix run nixpkgs";
       stix = "nix run nixpkgs";
-      fmt-nix = "alejandra --write /etc/dotfiles";
+      fmt-nix = "alejandra --write /etc/Frost";
 
       ni = "npm install";
       nr = "npm run";
@@ -103,7 +103,7 @@
       ytm = "ytfzf -m";
 
       envExtra = ''
-        export NH_FLAKE="/etc/dotfiles"
+        export NH_FLAKE="/etc/Frost"
       '';
     };
 
@@ -114,17 +114,19 @@
         if [[ "$host" != "desktop" && "$host" != "laptop" ]]; then
           return 1
         fi
-        cd /etc/dotfiles && git add -A && nh os switch /etc/dotfiles --hostname "$host"
+        cd /etc/Frost && git add -A && nh os switch /etc/Frost --hostname "$host"
       }
 
       alias os-switch="rebuild"
       rebuild-test() {
-        cd /etc/dotfiles && git add -A
-        nh os test /etc/dotfiles
+        cd /etc/Frost && git add -A
+        nh os test /etc/Frost
       }
 
       nix-clean() {
-        local dir="''${1:-/etc/dotfiles}"
+        local dir="''${1:-/etc/Frost}"
+
+        fd -t f -e py -x sed -i '/^[[:space:]]*#/d'
 
         echo "deleting the garbage (old cache)..."
         sudo nix-collect-garbage -d

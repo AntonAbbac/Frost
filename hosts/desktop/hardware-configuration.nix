@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   modulesPath,
   ...
 }: {
@@ -27,7 +28,7 @@
   fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/3e8932f8-3ce2-492a-b648-0337554ed9d0";
     fsType = "ext4";
-    options = ["defaults" "nofail"];
+    options = ["defaults" "nofail" "exec"];
   };
 
   systemd.tmpfiles.rules = [
@@ -38,6 +39,11 @@
   environment.sessionVariables = {
     STEAM_COMPAT_DATA_PATH = "$HOME/.local/share/Steam/steamapps/compatdata";
   };
+
+  environment.systemPackages = with pkgs; [
+    r2modman
+    steam-run
+  ];
 
   programs.steam.enable = true;
 

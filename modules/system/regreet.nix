@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{config, ...}: {
   stylix.targets.regreet.enable = false;
 
   services.displayManager.regreet = {
