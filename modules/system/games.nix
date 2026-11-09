@@ -3,6 +3,13 @@
   lib,
   ...
 }: {
+  boot.initrd.kernelModules = ["amdgpu"];
+  services.xserver.videoDrivers = ["amdgpu"];
+  systemd.services.lactd = {
+    enable = true;
+    wantedBy = ["multi-user.target"];
+  };
+
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "steam"
@@ -26,7 +33,10 @@
     protonup-qt
     wine
     protontricks
-    wineWowPackages.stable
+    wineWow64Packages.full
+    goldberg-emu
+    lsfg-vk
+    lsfg-vk-ui
   ];
 
   programs = {

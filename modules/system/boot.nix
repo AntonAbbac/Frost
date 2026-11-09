@@ -1,7 +1,9 @@
 {pkgs, ...}: {
   boot = {
-    plymouth.enable = true;
+    kernelParams = ["video=DVI-D-1:1920x1080@60e"];
     kernelPackages = pkgs.linuxPackages_zen;
+    plymouth.enable = true;
+
     loader = {
       systemd-boot.enable = false;
 
