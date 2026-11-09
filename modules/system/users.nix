@@ -5,13 +5,14 @@
     anton = {
       isNormalUser = true;
       extraGroups = [
-        "audio"
-        "gamemode"
-        "input"
-        "networkmanager"
-        "video"
         "wheel"
+        "disk"
+        "audio"
+        "video"
+        "input"
         "storage"
+        "networkmanager"
+        "systemd-journal"
       ];
       shell = pkgs.zsh;
       packages = with pkgs; [
@@ -36,5 +37,25 @@
     };
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.isInGroup("wheel")) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
+  environment.systemPackages = with pkgs; [
+    (makeDesktopItem {
+      name = "thunar-root";
+      desktopName = "Thunar (Root Total)";
+      exec = "pkexec thunar %F";
+      icon = "org.xfce.thunar";
+      categories = ["System" "FileTools" "FileManager"];
+    })
+  ];
+  security.sudo = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
 }

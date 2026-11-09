@@ -24,14 +24,25 @@
     options = ["fmask=0022" "dmask=0022"];
   };
 
-  fileSystems."/home/anton/SteamLibrary" = {
+  fileSystems."/mnt/storage" = {
     device = "/dev/disk/by-uuid/3e8932f8-3ce2-492a-b648-0337554ed9d0";
     fsType = "ext4";
-    options = ["nosuid" "nodev" "nofail"];
+    options = ["defaults" "nofail"];
   };
+
+  systemd.tmpfiles.rules = [
+    "d /mnt/storage/steamapps 0777 root root -"
+    "Z /mnt/storage/steamapps 0777 root root -"
+  ];
+
+  environment.sessionVariables = {
+    STEAM_COMPAT_DATA_PATH = "$HOME/.local/share/Steam/steamapps/compatdata";
+  };
+
+  programs.steam.enable = true;
 
   swapDevices = [];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
